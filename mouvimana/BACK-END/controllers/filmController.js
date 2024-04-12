@@ -31,18 +31,29 @@ const excelData = () =>{
 
 const excelFilter = () =>{
     const data = excelData();
-    console.log(data);
+    const formatData = data.map(movie =>{
+        const regex = /\<\/?[\w]+\>/g;
+        return{
+            id: movie.Id,
+            titre: movie.Titre,
+            titreOriginal: movie["Titre original"],
+            realisateurs: movie["Réalisateurs"],
+            anneeProd: movie["Année de production"],
+            nationnalite: movie["Nationalité"],
+            duree: movie["Durée"],
+            genre: movie.Genre,
+            synopsis: movie.Synopsis.replaceAll(regex, "")
+        }
+        
+    })
+    return formatData
 }
 console.log(excelFilter());
 
 
 export const registerFilm = async (req, res) =>{
     try{
-        const workbook = xlsx.readFile(excelPath);
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-        const jsonData = xlsx.utils.sheet_to_json(sheet);
-        
+        const filmData = excelFilter();
         const dbData = await Film.find();
         if (dbData.length > 0) {
             await Film.deleteMany();
