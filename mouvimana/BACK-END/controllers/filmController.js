@@ -5,16 +5,6 @@ import Film from '../models/filmData.js'
 
 
 const excelPath = path.join('data', "film.xlsx");
-// const data = () =>{
-//     return jsonData
-//     .then()
-// }
-// const newFilm = new Film({
-//     id: jsonData.map(movie => movie.Id),
-//     titre: jsonData.map(movie => movie.Titre),
-//     titreOriginal: jsonData.map(movie => movie["Titre original"])
-// })
-// console.log(newFilm._id);
 const excelData = () =>{
     try{
         const workbook = xlsx.readFile(excelPath);
@@ -27,12 +17,10 @@ const excelData = () =>{
     }
 }
 
-// console.log(excelData());
-
 const excelFilter = () =>{
     const data = excelData();
     const formatData = data.map(movie =>{
-        const regex = /\<\/?[\w]+\>/g;
+        const regex = /<[^>]*>/g;
         return{
             id: movie.Id,
             titre: movie.Titre,
@@ -48,7 +36,6 @@ const excelFilter = () =>{
     })
     return formatData
 }
-console.log(excelFilter());
 
 
 export const registerFilm = async (req, res) =>{
@@ -57,11 +44,11 @@ export const registerFilm = async (req, res) =>{
         const dbData = await Film.find();
         if (dbData.length > 0) {
             await Film.deleteMany();
-            await Film.create(jsonData);
-            res.status(200).json(jsonData);
+            await Film.create(filmData);
+            res.status(200).json(filmData);
         }else{
-            await Film.create(jsonData);
-            res.status(201).json(jsonData);
+            await Film.create(filmData);
+            res.status(201).json(filmData);
         }
     }
     catch(err){
