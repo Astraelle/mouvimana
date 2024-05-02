@@ -55,3 +55,12 @@ export const registerFilm = async (req, res) =>{
         res.status(500).json("Erreur lors de l'ajout en base de données", err);
     }
 }
+
+export const getFilm = async (req, res) =>{
+    try {
+        const getFilmData = await Film.find();
+        res.status(200).json(getFilmData);
+    } catch (err) {
+        res.status(500).json("Erreur lors de la récupération des données", err)
+    }
+}
