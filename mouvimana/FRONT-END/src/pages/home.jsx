@@ -1,8 +1,11 @@
 import React from 'react'
+import MovieSearch from '../components/search'
 
 const Home = () => {
   return (
-    <div className='h-[90vh] pt-[6vh]'>Home</div>
+    <div className='h-[90vh] pt-[55px]'>
+      
+    </div>
   )
 }
 

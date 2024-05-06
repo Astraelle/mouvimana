@@ -2,7 +2,7 @@ import React from 'react'
 
 const Films = () => {
   return (
-    <div className='h-[90vh] pt-[6vh]'>films</div>
+    <div className='h-[90vh] pt-[55px]'>films</div>
   )
 }
 
