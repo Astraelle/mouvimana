@@ -2,7 +2,8 @@ import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
 import { env } from './config/config.js';
-import filmRouter from './routers/filmRoute.js';
+import filmRouter from './routers/filmRouter.js';
+import userRouter from './routers/userRouter.js';
 
 const app = express();
 
@@ -23,7 +24,8 @@ mongoose.connect(env.mongo)
 const PORT = env.port || 8080
 
 // Routes
-app.use("/api/film", filmRouter)
+app.use("/api/film", filmRouter);
+app.use("/api/user", userRouter);
 
 // Serveur
 app.listen(PORT, () =>{
